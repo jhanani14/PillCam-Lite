@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verification History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Verification History</h2>
+
+    {% if records %}
+        <table>
+            <tr>
+                <th>Pill Name</th>
+                <th>OCR Text</th>
+            </tr>
+
+            {% for item in records %}
+            <tr>
+                <td>{{ item.pill_name }}</td>
+                <td>{{ item.ocr_text }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No verification history found.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+</div>
+
+</body>
+</html>

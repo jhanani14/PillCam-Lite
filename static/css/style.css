@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 400px;
+    margin: 80px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type=text], input[type=password], input[type=file] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.nav {
+    background: #343a40;
+    padding: 15px;
+}
+
+.nav a {
+    color: white;
+    margin-right: 15px;
+}

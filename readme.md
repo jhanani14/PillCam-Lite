@@ -1,172 +1,136 @@
-# PillCam-Lite (v1.0)
-### Traditional Computer Vision–Based Pill Verification System
+# 💊 PillCam-Lite
+### Explainable Pill Verification System using Computer Vision and OCR
+
+PillCam-Lite is an end-to-end Computer Vision–based web application that verifies pills using image processing and Optical Character Recognition (OCR). The system allows users to upload pill images, extract text using OCR, and identify pills based on visual and textual cues, while maintaining verification history for traceability.
 
 ---
 
-## 📌 Project Overview
+## 🚀 Features
 
-**PillCam-Lite v1.0** is a **traditional computer vision–based healthcare application** designed to verify whether a given tablet/pill image matches a known reference pill.  
-
-The system aims to **reduce medication errors** by visually analyzing pill characteristics such as **shape, size, and color**, without using deep learning or large pretrained models.
-
-This version represents the **Minimum Viable Product (MVP)** of the project and serves as the foundation for future upgrades such as **OCR-based prescription verification** and **database-driven user history tracking**.
-
----
-
-## 🎯 Problem Statement
-
-Medication errors due to:
-- similar-looking pills,
-- incorrect dispensing,
-- and lack of visual verification tools
-
-can cause serious health risks.
-
-Most existing solutions rely on:
-- manual checking, or
-- heavy deep learning models requiring large datasets.
-
-There is a need for a **lightweight, explainable, and low-resource solution** that can verify pills using **classical computer vision techniques**.
+- 🔐 User Authentication (Login & Register)
+- 📷 Pill Image Upload
+- 🧠 Computer Vision–based preprocessing
+- 🔍 OCR-based text extraction (Tesseract)
+- 🏷️ Pill Identification Logic
+- 📊 Verification History Tracking
+- 🖥️ Clean Web Interface (Flask + HTML/CSS)
 
 ---
 
-## 💡 Proposed Solution (v1)
+## 🏗️ System Architecture
 
-PillCam-Lite v1.0 verifies pills using:
-- **Image preprocessing**
-- **Contour-based pill segmentation**
-- **Feature extraction (shape, area, color)**
-- **Feature similarity matching**
-
-No deep learning or LLMs are used in this version.
-
----
-
-## 🧠 Core Concepts Used
-
-- Classical Computer Vision (OpenCV)
-- Image Thresholding and Morphological Operations
-- Contour Detection
-- HSV Color Space Analysis
-- Rule-based Feature Matching
-- Flask Web Framework
-
----
-
-## ⚙️ System Architecture (v1)
-
-User → Web Interface → Image Upload
-↓
-Image Preprocessing
-↓
-Pill Segmentation
-↓
-Feature Extraction
-(shape, area, color)
-↓
-Feature Matching
-↓
-Verification Result
+User → Web UI → Flask Backend
+├── CV Processing
+├── OCR Extraction
+├── Pill Matching Logic
+└── Database (SQLite)
 
 
 ---
 
-## 🧪 Features Implemented (v1)
+## 🧪 Technologies Used
 
-✔ Upload pill image  
-✔ Segment pill from background  
-✔ Extract visual features  
-✔ Compare against reference dataset  
-✔ Display verification result  
-✔ Lightweight & fast execution  
+| Category | Tools |
+|-------|------|
+| Backend | Flask (Python) |
+| CV | OpenCV |
+| OCR | Tesseract OCR |
+| Database | SQLite + SQLAlchemy |
+| Frontend | HTML, CSS |
+| Auth | Flask-Login |
 
 ---
 
-## 🗂️ Project Structure
+## 📂 Project Structure
 
 PillCam-Lite/
-├── backend/
-│ ├── app.py
-│ ├── detect.py
-│ ├── batch_register.py
-│ └── requirements.txt
-│
-├── dataset/
-│ ├── Paracetamol/
-│ ├── VitaminC/
-│ └── IronTablet/
-│
-├── static/
-│ └── uploads/
-│
+├── app.py
+├── auth.py
+├── models.py
+├── cv_matcher.py
+├── ocr.py
+├── config.py
+├── requirements.txt
 ├── templates/
-│ ├── index.html
-│ └── result.html
-│
-└── README.md
+├── static/
+└── uploads/
 
 
 ---
 
-## 📊 Dataset
+## ⚙️ Installation & Setup
 
-### Dataset Type
-- **Reference image dataset**
-- Class-wise pill images
+### 1️⃣ Clone the repository
 
-### Dataset Characteristics
-- Images captured on white background
-- Top-down view of pills
-- Synthetic dataset used for prototyping
-- Easily replaceable with real pill images
-
----
-
-## 🔍 Feature Extraction Details
-
-| Feature | Description |
-|------|------------|
-| Shape | Determined using contour circularity |
-| Area | Contour area in pixels |
-| Color | Median HSV color values |
-| Segmentation | Threshold + morphology |
-
----
-
-## 🧮 Matching Strategy
-
-- Euclidean distance–based similarity
-- Color difference in HSV space
-- Area difference thresholding
-- Shape consistency check
-- Final score aggregation across samples
-
----
-
-## 🖥️ Installation & Setup
-
-### Step 1: Clone Repository
-
-git clone https://github.com/jhanani14/PillCam-Lite.git
+git clone https://github.com/<your-username>/PillCam-Lite.git
 cd PillCam-Lite
 
-### Step 2: Create Virtual Environment
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
+
+git clone https://github.com/<your-username>/PillCam-Lite.git
+cd PillCam-Lite
+
+### 2. Create virtual environment
 
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate   # Linux/Mac
+.venv\Scripts\activate      # Windows
 
-### Step 3: Install Dependencies
+### 3. Install dependencies
 
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 
-### Step 4: Register Reference Pills
+### 4. Install Tesseract OCR
 
-python backend/batch_register.py
+Download from official source
 
-### Step 5: Run Application
+Add installation path to system PATH
 
-python backend/app.py
+Verify:
 
-Open browser at:
+tesseract --version
+
+### 5. Run the Application
+
+python app.py
+
+Open browser:
 
 http://127.0.0.1:5000
+
+---
+
+## How It Works
+
+1. User uploads pill image
+
+2. Image is preprocessed using OpenCV
+
+3. OCR extracts visible text from pill
+
+4. Matching logic identifies pill
+
+5. Result and OCR text are displayed
+
+6. Verification is stored in history.
+
+---
+
+## Future Enhancements (Version 3)
+
+1. Confidence score calculation
+
+2. Dataset-based validation
+
+3. Advanced CV feature extraction
+
+4. False positive handling
+
+5. UI/UX improvements
+
+6. Performance evaluation metrics

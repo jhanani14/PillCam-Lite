@@ -1,49 +1,81 @@
-from flask import Flask, render_template, request, redirect
-import os
-from detect import find_best_match, extract_features, DB_FILE
-import json
-import shutil
+from flask import Flask, render_template, request, redirect, url_for
+from flask_login import LoginManager, login_required, current_user
+from models import db, User, History
+from auth import auth
+from cv_matcher import match_pill
+from ocr import extract_text
+import config, os
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config.from_object(config)
+
+# Initialize DB
+db.init_app(app)
+
+# Login manager
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))  # SQLAlchemy 2.0 safe
+
+# Register auth blueprint
+app.register_blueprint(auth)
+
+# ---------------- ROUTES ---------------- #
 
 @app.route('/')
-def index():
-    return render_template('index.html', result=None)
+def home():
+    return redirect(url_for('auth.login'))
 
-@app.route('/verify', methods=['POST'])
-def verify():
-    file = request.files['pill_image']
-    if file:
-        path = os.path.join(UPLOAD_FOLDER, file.filename)
-        file.save(path)
-        best_match, score = find_best_match(path)
-        result = f"Best match: {best_match}, Score: {score:.2f}"
-        return render_template('index.html', result=result)
-    return redirect('/')
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/upload', methods=['GET', 'POST'])
+@login_required
+def upload():
     if request.method == 'POST':
-        file = request.files['pill_image']
-        pill_name = request.form['pill_name']
-        if file and pill_name:
-            path = os.path.join(UPLOAD_FOLDER, file.filename)
-            file.save(path)
-            features = extract_features(path)
-            # load db
-            db = {}
-            if os.path.exists(DB_FILE):
-                with open(DB_FILE, 'r') as f:
-                    db = json.load(f)
-            if pill_name not in db:
-                db[pill_name] = []
-            db[pill_name].append(features)
-            with open(DB_FILE, 'w') as f:
-                json.dump(db, f, indent=4)
-            return f"Pill {pill_name} registered successfully!"
-    return render_template('register.html')
+        file = request.files['image']
 
-if __name__ == '__main__':
+        if file.filename == '':
+            return redirect(url_for('upload'))
+
+        save_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(save_path)
+
+        # CV + OCR
+        pill = match_pill(save_path)
+        text = extract_text(save_path)
+
+        # Save history
+        record = History(
+            user_id=current_user.id,
+            pill_name=pill,
+            ocr_text=text
+        )
+        db.session.add(record)
+        db.session.commit()
+
+        return render_template('result.html', pill=pill, text=text)
+
+    return render_template('upload.html')
+
+@app.route('/history')
+@login_required
+def history():
+    records = History.query.filter_by(user_id=current_user.id).all()
+    return render_template('history.html', records=records)
+
+# ---------------- RUN ---------------- #
+
+if __name__ == "__main__":
+    os.makedirs(config.UPLOAD_FOLDER, exist_ok=True)
+
+    with app.app_context():
+        db.create_all()
+
     app.run(debug=True)
