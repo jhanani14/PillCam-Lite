@@ -6,3 +6,8 @@ pytesseract
 Pillow
 numpy
 python-dotenv
+
+
+scikit-learn
+
+matplotlib

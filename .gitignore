@@ -1,32 +1,158 @@
-# Virtual environment
+############################################
+# 🔒 ENVIRONMENT & SECRETS
+############################################
+.env
+.env.*
+*.env
+
+############################################
+# 🐍 PYTHON
+############################################
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+############################################
+# 🧪 VIRTUAL ENVIRONMENTS
+############################################
 .venv/
 venv/
 env/
+ENV/
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Flask uploads
-uploads/
+############################################
+# 🌐 FLASK / WEB
+############################################
 instance/
-
-# Dataset (optional – keep if dataset is large)
-dataset/
-test_dataset/
-
-# Logs
+uploads/
+flask_session/
 *.log
+*.pid
 
-# OS files
-.DS_Store
-Thumbs.db
+############################################
+# 🗄 DATABASE FILES
+############################################
+*.db
+*.sqlite
+*.sqlite3
 
-# IDE
+############################################
+# 📦 DATASETS (IMPORTANT FOR GITHUB)
+############################################
+data/raw/
+data/processed/
+data/interim/
+data/external/
+datasets/
+dataset/
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+############################################
+# 🧠 ML / CV ARTIFACTS
+############################################
+*.pkl
+*.h5
+*.pt
+*.onnx
+*.joblib
+models/
+checkpoints/
+weights/
+
+############################################
+# 📊 EVALUATION OUTPUTS
+############################################
+evaluation/*.png
+evaluation/*.jpg
+evaluation/*.csv
+evaluation/*.json
+evaluation/*.txt
+reports/
+results/
+
+############################################
+# 📷 IMAGE & VIDEO FILES
+############################################
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tiff
+*.gif
+*.mp4
+*.avi
+*.mov
+
+############################################
+# 📒 NOTEBOOKS
+############################################
+.ipynb_checkpoints/
+*.ipynb
+
+############################################
+# 🖥 IDE / EDITOR FILES
+############################################
 .vscode/
 .idea/
+*.swp
+*.swo
+*.bak
 
-# Environment variables
-.env
+############################################
+# 🖱 OS SYSTEM FILES
+############################################
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+############################################
+# 🔧 BUILD / CACHE
+############################################
+build/
+dist/
+.eggs/
+*.egg-info/
+.cache/
+.pytest_cache/
+.mypy_cache/
+
+############################################
+# 🧪 TEST / DEBUG
+############################################
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+
+############################################
+# 🔐 API KEYS / CREDENTIALS
+############################################
+config_local.py
+secrets.py
+credentials.json
+apikey.txt
+
+############################################
+# 📜 DOCUMENTATION EXPORTS
+############################################
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+
+############################################
+# 🚫 MISC
+############################################
+tmp/
+temp/
+logs/

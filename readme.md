@@ -1,60 +1,101 @@
-# 💊 PillCam-Lite
-### Explainable Pill Verification System using Computer Vision and OCR
+# 💊 PillCam-Lite  
+**AI-Based Pill Identification and OCR System**
 
-PillCam-Lite is an end-to-end Computer Vision–based web application that verifies pills using image processing and Optical Character Recognition (OCR). The system allows users to upload pill images, extract text using OCR, and identify pills based on visual and textual cues, while maintaining verification history for traceability.
+PillCam-Lite is an AI-powered web application designed to identify pills from images and extract textual information using computer vision and OCR techniques. The system is built using Flask and classical computer vision methods, making it lightweight, interpretable, and suitable for academic research, prototyping, and healthcare-related applications.
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-- 🔐 User Authentication (Login & Register)
+- 🔐 User Authentication (Register / Login)
 - 📷 Pill Image Upload
-- 🧠 Computer Vision–based preprocessing
-- 🔍 OCR-based text extraction (Tesseract)
-- 🏷️ Pill Identification Logic
-- 📊 Verification History Tracking
-- 🖥️ Clean Web Interface (Flask + HTML/CSS)
+- 🧠 Pill Identification using ORB Feature Matching
+- 📝 OCR-based Text Extraction from Pill Images
+- 📊 Evaluation Module with Accuracy & Metrics
+- 🗂 User History Tracking
+- 📈 Confusion Matrix Visualization
 
 ---
 
-## 🏗️ System Architecture
+## 🧠 System Architecture
 
-User → Web UI → Flask Backend
-├── CV Processing
-├── OCR Extraction
-├── Pill Matching Logic
-└── Database (SQLite)
-
+User
+↓
+Web Interface (Flask + HTML/CSS)
+↓
+Image Upload
+↓
+Preprocessing (OpenCV)
+↓
+Feature Extraction (ORB)
+↓
+Feature Matching (Reference DB)
+↓
+Pill Identification
+↓
+OCR (Tesseract)
+↓
+Result + History Storage (SQLite)
 
 ---
 
 ## 🧪 Technologies Used
 
-| Category | Tools |
-|-------|------|
-| Backend | Flask (Python) |
-| CV | OpenCV |
-| OCR | Tesseract OCR |
-| Database | SQLite + SQLAlchemy |
+| Component | Technology |
+|--------|------------|
+| Backend | Python, Flask |
 | Frontend | HTML, CSS |
-| Auth | Flask-Login |
+| Database | SQLite, SQLAlchemy |
+| Computer Vision | OpenCV (ORB) |
+| OCR | Tesseract OCR |
+| Evaluation | NumPy, scikit-learn, Matplotlib |
+| Authentication | Flask-Login |
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 PillCam-Lite/
+│
 ├── app.py
 ├── auth.py
-├── models.py
-├── cv_matcher.py
-├── ocr.py
 ├── config.py
-├── requirements.txt
+├── models.py
+│
+├── cv/
+│ ├── preprocess.py
+│ ├── feature_extractor.py
+│ └── matcher.py
+│
+├── ocr/
+│ └── ocr_engine.py
+│
+├── evaluation/
+│ ├── evaluate.py
+│ └── confusion_matrix.png
+│
+├── tools/
+│ └── generate_reference.py
+│
+├── data/
+│ ├── raw/images/
+│ └── reference_db/features.pkl
+│
 ├── templates/
+│ ├── login.html
+│ ├── register.html
+│ ├── dashboard.html
+│ ├── upload.html
+│ ├── result.html
+│ └── history.html
+│
 ├── static/
-└── uploads/
-
+│ └── css/style.css
+│
+├── uploads/
+├── requirements.txt
+├── README.md
+└── .gitignore
 
 ---
 
@@ -85,52 +126,47 @@ source .venv/bin/activate   # Linux/Mac
 
 pip install -r requirements.txt
 
-### 4. Install Tesseract OCR
-
-Download from official source
-
-Add installation path to system PATH
-
-Verify:
-
-tesseract --version
+### 4. Generate Reference Features
+python -m tools.generate_reference
 
 ### 5. Run the Application
-
 python app.py
 
-Open browser:
+
+### 6. Open browser:
 
 http://127.0.0.1:5000
 
----
+### 7. Evaluation & Metrics
 
-## How It Works
+Run evaluation module:
 
-1. User uploads pill image
+python -m evaluation.evaluate
 
-2. Image is preprocessed using OpenCV
+### Metrics Used:
 
-3. OCR extracts visible text from pill
+Accuracy
 
-4. Matching logic identifies pill
+Precision
 
-5. Result and OCR text are displayed
+Recall
 
-6. Verification is stored in history.
+Confusion Matrix
 
----
+### Output:
 
-## Future Enhancements (Version 3)
+evaluation/confusion_matrix.png
 
-1. Confidence score calculation
+Console metric report
 
-2. Dataset-based validation
+## Future Enhancements
 
-3. Advanced CV feature extraction
+CNN-based pill classification
 
-4. False positive handling
+Top-K matching
 
-5. UI/UX improvements
+Mobile app integration
 
-6. Performance evaluation metrics
+Multilingual OCR
+
+Drug database API integration
