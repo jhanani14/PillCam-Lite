@@ -1,55 +1,90 @@
 # 💊 PillCam-Lite  
-**AI-Based Pill Identification and OCR System**
-
-PillCam-Lite is an AI-powered web application designed to identify pills from images and extract textual information using computer vision and OCR techniques. The system is built using Flask and classical computer vision methods, making it lightweight, interpretable, and suitable for academic research, prototyping, and healthcare-related applications.
+### Lightweight Pill Identification & OCR System for Healthcare Applications
 
 ---
 
-## 🚀 Key Features
+## 📌 Abstract
+Accurate identification of pharmaceutical pills and extraction of imprint text from images is challenging due to variations in pill shape, color, imprint clarity, lighting conditions, and camera quality. Existing systems mostly rely on deep learning models that require large labeled datasets, high computational resources, and limited explainability.
 
-- 🔐 User Authentication (Register / Login)
-- 📷 Pill Image Upload
-- 🧠 Pill Identification using ORB Feature Matching
-- 📝 OCR-based Text Extraction from Pill Images
-- 📊 Evaluation Module with Accuracy & Metrics
-- 🗂 User History Tracking
-- 📈 Confusion Matrix Visualization
+**PillCam-Lite** proposes a **lightweight, interpretable, and modular computer vision system** that integrates image preprocessing, visual feature extraction, OCR-based text recognition, and a deterministic feature-fusion scoring algorithm for reliable pill identification. The system is suitable for academic research, healthcare applications, and resource-constrained environments.
 
 ---
 
 ## 🧠 System Architecture
 
-User
+User Image
 ↓
-Web Interface (Flask + HTML/CSS)
+Image Preprocessing
 ↓
-Image Upload
+Feature Extraction (ORB + HSV)
 ↓
-Preprocessing (OpenCV)
+OCR Text Extraction
 ↓
-Feature Extraction (ORB)
+Similarity Computation
 ↓
-Feature Matching (Reference DB)
+Weighted Feature Fusion
 ↓
-Pill Identification
-↓
-OCR (Tesseract)
-↓
-Result + History Storage (SQLite)
+Pill Identification Result
 
 ---
 
-## 🧪 Technologies Used
+## 🔬 Technologies Used
 
-| Component | Technology |
-|--------|------------|
-| Backend | Python, Flask |
-| Frontend | HTML, CSS |
-| Database | SQLite, SQLAlchemy |
-| Computer Vision | OpenCV (ORB) |
-| OCR | Tesseract OCR |
-| Evaluation | NumPy, scikit-learn, Matplotlib |
-| Authentication | Flask-Login |
+- Python  
+- Flask  
+- OpenCV  
+- ORB Feature Descriptors  
+- Tesseract OCR  
+- SQLite  
+- NumPy  
+- Matplotlib (Evaluation)
+
+---
+
+## 🧪 Methodology
+
+### 1️⃣ Image Preprocessing
+- Gaussian blur for noise reduction  
+- Adaptive thresholding for segmentation  
+- Morphological operations for contour refinement  
+
+### 2️⃣ Visual Feature Extraction
+- ORB keypoints and descriptors  
+- Fixed-length feature vector generation  
+
+### 3️⃣ Color Feature Representation
+- HSV color histogram  
+- Histogram normalization  
+
+### 4️⃣ OCR-Based Text Extraction
+- Tesseract OCR to extract pill imprints  
+- Text cleaning and normalization  
+
+### 5️⃣ Similarity Computation
+- Euclidean distance for visual similarity  
+- Levenshtein distance for text similarity  
+
+### 6️⃣ Weighted Feature Fusion (Novel Contribution)
+A deterministic scoring mechanism combines:
+- Visual similarity  
+- Color similarity  
+- OCR text similarity  
+
+The pill with the **highest combined score** is selected as the final match.
+
+---
+
+## 📊 Evaluation Strategy
+
+### Metrics Used
+- Top-1 Identification Accuracy  
+- Average Feature Distance  
+- OCR Similarity Score  
+- Processing Time per Image  
+
+### Evaluation Dataset
+- Reference pill images  
+- Query images under different lighting, angles, and resolutions  
 
 ---
 
@@ -103,9 +138,8 @@ PillCam-Lite/
 
 ### 1️⃣ Clone the repository
 
-git clone https://github.com/<your-username>/PillCam-Lite.git
+git clone https://github.com/jhanani14/PillCam-Lite.git
 cd PillCam-Lite
-
 
 ---
 
@@ -159,14 +193,53 @@ evaluation/confusion_matrix.png
 
 Console metric report
 
+---
+
+## Key Contributions
+
+Lightweight pill identification without deep learning
+
+Fully interpretable and explainable feature fusion
+
+No dependency on large labeled datasets
+
+Modular and extensible architecture
+
+---
+
+## Application Areas
+
+Medical pill identification
+
+Pharmacy automation systems
+
+Clinical decision support
+
+Healthcare informatics research
+
+---
+
+## References
+
+R. Szeliski, Computer Vision: Algorithms and Applications
+
+R. Gonzalez and R. Woods, Digital Image Processing
+
+C. Bishop, Pattern Recognition and Machine Learning
+
+D. Lowe, “Distinctive Image Features from Scale-Invariant Keypoints”
+
+R. Smith, “An Overview of the Tesseract OCR Engine”
+
+---
+
 ## Future Enhancements
 
-CNN-based pill classification
+Deep learning hybrid comparison
 
-Top-K matching
+Mobile deployment
 
-Mobile app integration
+Larger reference dataset
 
-Multilingual OCR
+Real-time camera integration
 
-Drug database API integration
